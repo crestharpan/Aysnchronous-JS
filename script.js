@@ -54,3 +54,6 @@ const getCountryAndNeighbour = function (country) {
   });
 };
 getCountryAndNeighbour('portugal');
+//replacing the older with modern XML API call
+//fetch function returns a promise
+const request = fetch('https://restcountries.com/v2/name/portugal'); //GET method
