@@ -1,0 +1,5 @@
+//most of the code written before this section is synchronous(line by line execution)
+//In synchronous each line of code waits for the previous line of code to be executed.
+//for eg when an alert is executed we cannot do anything anything on webpage untill ok is selected this can reduce the speed of the code
+when next line of code waits untill that scenario is completed
+//for eg setTimeout() is aynchoronus/non blocking code 
