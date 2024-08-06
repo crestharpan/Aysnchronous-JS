@@ -53,7 +53,37 @@ const getCountryAndNeighbour = function (country) {
     });
   });
 };
-getCountryAndNeighbour('portugal');
+// getCountryAndNeighbour('portugal');
+//steps happening within each line of code
 //replacing the older with modern XML API call
 //fetch function returns a promise
+// const request = fetch('https://restcountries.com/v2/name/portugal'); //GET method
+// const getCountryData = function (country) {
+//   //the then function gets a callback function and callback function takes one argument which is the resulting value
+//   fetch(`https://restcountries.com/v2/name/${country}`)
+//     .then(function (response) {
+//       console.log(response);
+//       return response.json(); //the json method is available to all the value holding the result(for this response) aslo returns promise
+//     })
+//     .then(function (data) {
+//       console.log(data); //holds the data of the response
+//       renderCountry(data[0]);
+//     });
+// };
+//flat chain of promises
 const request = fetch('https://restcountries.com/v2/name/portugal'); //GET method
+const getCountryData = function (country) {
+  fetch(`https://restcountries.com/v2/name/${country}`)
+    .then(response => response.json())
+    .then(function (data) {
+      renderCountry(data[0]);
+      //neighbour country of country
+      const neighbour1 = data[0].borders[0];
+      if (!neighbour1) return;
+      return fetch(`https://restcountries.com/v2/alpha/${neighbour1}`); //always return a promise to avoid callBack hell
+    })
+    .then(response => response.json())
+    .then(data => renderCountry(data, 'neighbour'));
+};
+
+getCountryData('Portugal');
