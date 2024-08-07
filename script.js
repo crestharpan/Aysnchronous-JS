@@ -115,3 +115,37 @@ const getCountryData = function (country) {
 btn.addEventListener('click', function () {
   getCountryData('Portugal');
 });
+//building promise //builtIn object
+
+const lotteryPromise = new Promise(function (resolve, reject) {
+  //executer function
+  console.log('Draw is happening');
+  setTimeout(function () {
+    if (Math.random() >= 0.5) {
+      //fulfilled promise
+      resolve('You win');
+    } else {
+      reject(new Error('You lost your money')); //will throw  error message to catch function
+    }
+  }, 2000);
+});
+lotteryPromise.then(res => console.log(res)).catch(err => console.log(err));
+//promisifying setTimeOut
+const wait = function (seconds) {
+  return new Promise(function (resolve) {
+    setTimeout(resolve, seconds * 1000);
+  });
+};
+wait(1)
+  .then(() => {
+    console.log('1 seconds passed');
+    return wait(1);
+  })
+  .then(() => {
+    console.log('2 seconds passed');
+    return wait(1);
+  })
+  .then(() => console.log('3 seconds passed'));
+//static method to handle promise
+Promise.resolve('abacus').then(x => console.log(x));
+Promise.reject(new Error('Error occurred')).catch(x => console.log(x));
