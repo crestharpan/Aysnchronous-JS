@@ -115,3 +115,8 @@ const getCountryData = function (country) {
 btn.addEventListener('click', function () {
   getCountryData('Portugal');
 });
+//eventLoop
+console.log('Test start'); //This will be executed first
+setTimeout(() => console.log('timer'), 0); //executes after promise //last
+Promise.resolve('Resolved promise 1').then(res => console.log(res)); //Third(microTask queue)
+console.log('Test end'); //second
