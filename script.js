@@ -193,7 +193,7 @@ const get3countries = async function (c1, c2, c3) {
       getJson(`https://restcountries.com/v2/name/${c1}`),
       getJson(`https://restcountries.com/v2/name/${c2}`),
       getJson(`https://restcountries.com/v2/name/${c3}`),
-    ]); //will return a new promise
+    ]); //will return a new promise //a promise combinator function
     console.log(data);
     console.log(data.map(d => d[0].capital));
   } catch (err) {
@@ -201,3 +201,4 @@ const get3countries = async function (c1, c2, c3) {
   }
 };
 get3countries('portugal', 'Nepal', 'India');
+d;
