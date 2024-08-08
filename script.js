@@ -174,7 +174,30 @@ getPosition().then(pos => console.log(pos));
 const whereAmI = async function (country) {
   // fetch(`https://restcountries.com/v2/alpha/${country}`).then(res=>console.log(res));
   //same as
-  const res = await fetch(`https://restcountries.com/v2/alpha/${country}`); //reserved value of the promise
+  const res = await fetch(`https://restcountries.com/v2/name/${country}`); //reserved value of the promise
   const data = await res.json();
   renderCountry(data[0]);
 };
+//running the async function parallely
+const get3countries = async function (c1, c2, c3) {
+  try {
+    //sequentially running
+    // const [data1] = await getJson(`https://restcountries.com/v2/name/${c1}`);
+    // const [data2] = await getJson(`https://restcountries.com/v2/name/${c2}`);
+    // const [data3] = await getJson(`https://restcountries.com/v2/name/${c3}`);
+    // console.log([data1, data2, data3]);
+
+    // //parallely running
+    //if one promise rejects then all promise rejects in parallel promisegit
+    const data = await Promise.all([
+      getJson(`https://restcountries.com/v2/name/${c1}`),
+      getJson(`https://restcountries.com/v2/name/${c2}`),
+      getJson(`https://restcountries.com/v2/name/${c3}`),
+    ]); //will return a new promise
+    console.log(data);
+    console.log(data.map(d => d[0].capital));
+  } catch (err) {
+    console.log(err);
+  }
+};
+get3countries('portugal', 'Nepal', 'India');
