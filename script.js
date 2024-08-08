@@ -35,22 +35,29 @@ getPosition().then(pos => console.log(pos));
 //consuming promises with async await
 const whereAmI = async function () {
   //geolocation
-  const pos = await getPosition();
-  const { latitude: lat, longitude: lng } = pos.coords;
-  //reverse geoCoding
-  // fetch(`https://restcountries.com/v2/alpha/${country}`).then(res=>console.log(res));
-  //same as
-  const resGeo = await fetch(
-    `https:api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}&localityLanguage=en`
-  );
-  const dataGeo = await resGeo.json();
-  console.log(dataGeo.countryName);
-  const res = await fetch(
-    `https://restcountries.com/v2/name/${dataGeo.countryName}`
-  ); //reserved value of the promise
-  console.log(res);
-  const data = await res.json();
-  console.log(data);
-  renderCountry(data[0]);
+  try {
+    const pos = await getPosition();
+    const { latitude: lat, longitude: lng } = pos.coords;
+    //reverse geoCoding
+    // fetch(`https://restcountries.com/v2/alpha/${country}`).then(res=>console.log(res));
+    //same as
+    const resGeo = await fetch(
+      `https:api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}&localityLanguage=en`
+    );
+    if (!resGeo.ok) throw new Error('No country');
+    const dataGeo = await resGeo.json();
+    console.log(dataGeo.countryName);
+    const res = await fetch(
+      `https://restcountries.com/v2/name/${dataGeo.countryName}`
+    ); //reserved value of the promise
+    if (!res.ok) {
+      throw new Error('cannot find the country');
+    }
+    const data = await res.json();
+
+    renderCountry(data[0]);
+  } catch (err) {
+    console.log(err);
+  }
 };
 whereAmI();
