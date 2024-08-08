@@ -201,4 +201,3 @@ const get3countries = async function (c1, c2, c3) {
   }
 };
 get3countries('portugal', 'Nepal', 'India');
-d;
