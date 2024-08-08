@@ -149,3 +149,32 @@ wait(1)
 //static method to handle promise
 Promise.resolve('abacus').then(x => console.log(x));
 Promise.reject(new Error('Error occurred')).catch(x => console.log(x));
+
+//promisifying the geolocaton position
+
+// navigator.geolocation.getCurrentPosition(
+
+//   position => console.log(position),
+//   err => console.error(err)
+// );
+// console.log('Getting the position');
+//converting the above callBack API to promise based API
+const getPosition = function () {
+  return new Promise(function (resolve, reject) {
+    // navigator.geolocation.getCurrentPosition(
+    //   position => resolve(position),
+    //   err => reject(err)
+    // ); same as
+    navigator.geolocation.getCurrentPosition(resolve, reject);
+  });
+};
+getPosition().then(pos => console.log(pos));
+
+//consuming promises with async await
+const whereAmI = async function (country) {
+  // fetch(`https://restcountries.com/v2/alpha/${country}`).then(res=>console.log(res));
+  //same as
+  const res = await fetch(`https://restcountries.com/v2/alpha/${country}`); //reserved value of the promise
+  const data = await res.json();
+  renderCountry(data[0]);
+};
